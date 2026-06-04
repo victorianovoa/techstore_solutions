@@ -1,36 +1,34 @@
 # TechStore Solutions
 
-## Sistema de E-commerce para Produtos de Tecnologia com aplicação do padrão Singleton
+Sistema web de comércio eletrônico desenvolvido como projeto acadêmico do curso de Engenharia de Software do Centro Universitário de Brasília (UniCEUB).
 
-Projeto acadêmico desenvolvido no Centro Universitário de Brasília – UniCEUB, no curso de Engenharia de Software, como atividade da disciplina Metodologia de Desenvolvimento de Software.
+## Sobre o Projeto
 
----
+A TechStore Solutions é uma plataforma de e-commerce voltada para a comercialização de produtos tecnológicos, periféricos gamers, hardware e acessórios de informática.
 
-## Objetivo do projeto
+O projeto foi desenvolvido com foco na aplicação prática de conceitos de Engenharia de Software, Modelagem UML, Arquitetura em Camadas, Banco de Dados Relacional, Programação Orientada a Objetos e Versionamento de Código.
 
-Desenvolver uma plataforma web voltada à comercialização de produtos tecnológicos, com foco em:
+## Funcionalidades
 
-* periféricos gamers;
-* hardware;
-* computadores;
-* acessórios tecnológicos.
+### Cliente
 
-A proposta integra teoria e prática, aplicando conceitos de:
+* Cadastro de usuários
+* Login no sistema
+* Consulta ao catálogo de produtos
+* Adição de produtos ao carrinho
+* Visualização de produtos
+* Finalização de pedidos
 
-* Engenharia de Software;
-* UML;
-* Banco de Dados;
-* Arquitetura em Camadas;
-* Scrum;
-* Java;
-* PHP;
-* MySQL;
-* GitHub;
-* Design Patterns.
+### Administrador
 
----
+* Cadastro de produtos
+* Atualização de produtos
+* Exclusão de produtos
+* Listagem de produtos
+* Controle de estoque
+* Gerenciamento de informações do sistema
 
-## Tecnologias utilizadas
+## Tecnologias Utilizadas
 
 ### Front-end
 
@@ -40,128 +38,110 @@ A proposta integra teoria e prática, aplicando conceitos de:
 
 ### Back-end
 
-* PHP 8
-* Java
+* PHP
 
-### Banco de dados
+### Banco de Dados
 
 * MySQL
 
-### Ambiente de desenvolvimento
-
-* Visual Studio Code
-* XAMPP
-
-### Controle de versão
+### Ferramentas
 
 * Git
 * GitHub
+* XAMPP
+* Visual Studio Code
 
-### Modelagem
+## Arquitetura do Projeto
 
-* UML
-* Figma
-
----
-
-## Estrutura do projeto
-
-```txt
-TechStoreSolutions/
+O sistema foi estruturado utilizando arquitetura em camadas:
 
 backend/
+
+* config
+* controllers
+* models
+* services
+
 frontend/
-java/
+
 sql/
+
 docs/
-tests/
+
+## Padrões Utilizados
+
+### Singleton
+
+O padrão Singleton foi aplicado para centralizar o gerenciamento da conexão com o banco de dados através da classe Database.
+
+## Estrutura do Projeto
+
+techstore_solutions/
+
+backend/
+
+* config/
+* controllers/
+* models/
+* services/
+
+frontend/
+
+sql/
+
+docs/
+
 README.md
-```
 
----
+## Banco de Dados
 
-## Funcionalidades previstas
+O sistema utiliza MySQL para armazenamento das informações.
 
-### Cliente
+Principais tabelas:
 
-* cadastro
-* login
-* consulta de produtos
-* carrinho
-* descontos automáticos
-* histórico de pedidos
+* usuarios
+* categorias
+* produtos
+* pedidos
+* itens_pedido
 
-### Administrador
+## Como Executar o Projeto
 
-* cadastrar produtos
-* editar produtos
-* excluir produtos
-* controle de estoque
-* gerenciamento de pedidos
+### Pré-requisitos
 
-### Sistema
+* XAMPP
+* PHP
+* MySQL
+* Navegador Web
 
-* autenticação
-* persistência em banco
-* integração Java + PHP
-* padrão Singleton
-* organização modular
+### Passos
 
----
+1. Clonar o repositório.
 
-## Execução local
+2. Copiar o projeto para a pasta htdocs do XAMPP.
 
-### Java
+3. Iniciar Apache e MySQL.
 
-```bash
-cd java
-javac *.java
-java Main
-```
+4. Criar o banco de dados utilizando os scripts da pasta sql.
 
-### Banco de dados
+5. Acessar o projeto pelo navegador.
 
-Importar:
+## Versionamento
 
-```txt
-sql/techstore.sql
-```
-
-### PHP
-
-Executar via:
-
-```txt
-http://localhost/TechStoreSolutions
-```
-
-com Apache e MySQL ativos no XAMPP.
-
----
+O projeto utiliza Git e GitHub para controle de versões e rastreamento das alterações realizadas durante o desenvolvimento.
 
 ## Equipe
 
-Arthur Santana Santos
-
-Felipe Evangelista e Silva
-
-Ian Alves Calado
-
-Lucas Coelho de Castro
-
-Miguel Andrade de Lima
-
-Victória de Nóvoa Gama
-
----
+* Arthur Santana Santos
+* Felipe Evangelista e Silva
+* Ian Alves Calado
+* Lucas Coelho de Castro
+* Victória de Nóvoa Gama
 
 ## Repositório
 
 https://github.com/victorianovoa/techstore_solutions
 
----
+## Licença
 
-## Documentação complementar
-
-* Documento acadêmico principal
-* Documento técnico Java + PHP + SQL
+Projeto desenvolvido para fins acadêmicos na disciplina Metodologia de Desenvolvimento de Software do Centro Universitário de Brasília (UniCEUB).
