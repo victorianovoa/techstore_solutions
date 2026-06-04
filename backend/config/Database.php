@@ -1,38 +1,39 @@
 <?php
 
-class Database {
+class Database
+{
+    private static ?Database $instance = null;
 
-   private static $instance;
+    private mysqli $connection;
 
-   private $connection;
+    private function __construct()
+    {
+        $this->connection = new mysqli(
+            "localhost",
+            "root",
+            "",
+            "techstore"
+        );
 
-   private function __construct() {
+        if ($this->connection->connect_error) {
+            die(
+                "Erro de conexão: " .
+                $this->connection->connect_error
+            );
+        }
+    }
 
-       $this->connection =
-           new mysqli(
-               "localhost",
-               "root",
-               "",
-               "techstore"
-           );
-   }
+    public static function getInstance(): Database
+    {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
 
-   public static function getInstance() {
+        return self::$instance;
+    }
 
-       if (
-           self::$instance == null
-       ) {
-
-           self::$instance =
-               new Database();
-       }
-
-       return self::$instance;
-   }
-
-   public function getConnection() {
-
-       return $this->connection;
-   }
+    public function getConnection(): mysqli
+    {
+        return $this->connection;
+    }
 }
-?>
