@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin — TechStore Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Header admin -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-box">TS</div>
+      <div class="logo-text"><strong>TechStore</strong><span>Admin</span></div>
+    </a>
+    <div class="header-acoes">
+      <a href="index.html" class="btn-hdr">🏪 Ver loja</a>
+      <a href="login.html" class="btn-hdr">🚪 Sair</a>
+    </div>
+  </div>
+</header>
+
+<!-- Layout admin: sidebar + conteúdo -->
+<div class="admin-wrap">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <strong style="font-size:.88rem;">Painel Admin</strong>
+      <br><small>TechStore Solutions</small>
+    </div>
+
+    <div class="sidebar-label">Principal</div>
+    <div class="sidebar-link ativo" onclick="mostrarSecao('dashboard', this)">
+      📊 Dashboard
+    </div>
+
+    <div class="sidebar-label">Catálogo</div>
+    <div class="sidebar-link" onclick="mostrarSecao('produtos', this)">
+      📦 Produtos
+    </div>
+
+    <div class="sidebar-label">Usuários</div>
+    <div class="sidebar-link" onclick="mostrarSecao('usuarios', this)">
+      👥 Usuários
+    </div>
+  </aside>
+
+  <!-- ── Conteúdo principal ── -->
+  <main class="admin-main">
+
+    <!-- ════════════════════════════
+         DASHBOARD
+    ════════════════════════════ -->
+    <section id="sec-dashboard">
+      <div class="admin-pg-hdr">
+        <h2>📊 Dashboard</h2>
+        <span style="font-size:.8rem;color:var(--muted);">Visão geral</span>
+      </div>
+
+      <!-- Cards de estatísticas (populados via JS) -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-ico am">📦</div>
+          <div><span class="stat-val" id="stat-produtos">—</span><span class="stat-txt">Produtos</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-ico ve">⚠️</div>
+          <div><span class="stat-val" id="stat-sem-estoque">—</span><span class="stat-txt">Sem estoque</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-ico gr">🖱️</div>
+          <div><span class="stat-val" id="stat-mouse">—</span><span class="stat-txt">Mouse</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-ico az">⌨️</div>
+          <div><span class="stat-val" id="stat-teclado">—</span><span class="stat-txt">Teclado</span></div>
+        </div>
+      </div>
+
+      <h3 style="font-size:.95rem;font-weight:700;margin-bottom:14px;">
+        Produtos cadastrados
+      </h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th><th>Preço</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-dash">
+            <tr><td colspan="2" style="text-align:center;color:var(--muted);padding:20px;">
+              <div class="spin" style="margin:0 auto 8px;"></div>Carregando…
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════
+         PRODUTOS — CRUD completo
+         Usa os 3 controllers originais:
+           ProdutoController.php  (POST → INSERT)
+           AtualizarProduto.php   (POST → UPDATE)
+           ExcluirProduto.php     (GET  → DELETE)
+    ════════════════════════════ -->
+    <section id="sec-produtos" style="display:none;">
+      <div class="admin-pg-hdr">
+        <h2>📦 Produtos</h2>
+        <button class="btn btn-primary btn-sm" onclick="abrirModal(null)">
+          + Novo Produto
+        </button>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Estoque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-produtos">
+            <tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px;">
+              <div class="spin" style="margin:0 auto 8px;"></div>Carregando…
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════
+         USUÁRIOS
+    ════════════════════════════ -->
+    <section id="sec-usuarios" style="display:none;">
+      <div class="admin-pg-hdr"><h2>👥 Usuários</h2></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center;color:var(--muted);">
+        <div style="font-size:2rem;margin-bottom:12px;">👥</div>
+        <p>O gerenciamento de usuários depende de um controller no backend.</p>
+        <p style="margin-top:8px;font-size:.82rem;">
+          Crie <code style="color:var(--yellow);">ListarUsuarios.php</code> seguindo o padrão
+          do <code style="color:var(--yellow);">ListarProdutos.php</code> original.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── Modal: Criar / Editar Produto ──
+     Criar → POST para ProdutoController.php  (campos: nome, preco, estoque)
+     Editar → POST para AtualizarProduto.php  (campos: id, nome, preco, estoque)
+     Ambos são os controllers ORIGINAIS do backend.
+-->
+<div class="modal-ov" id="modal-produto">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="modal-titulo">Novo Produto</h3>
+      <button class="btn-fechar" onclick="fecharModal()">✕</button>
+    </div>
+
+    <form id="form-produto">
+      <!-- Campo id: oculto, usado apenas na edição por AtualizarProduto.php -->
+      <input type="hidden" id="prod-id" name="id">
+
+      <div class="form-grid2">
+        <div class="campo col-full">
+          <label>Nome do Produto *</label>
+          <!-- $_POST["nome"] → ProdutoController.php e AtualizarProduto.php -->
+          <input type="text" id="prod-nome" name="nome"
+                 placeholder="Ex: Logitech G Pro X Superlight" required>
+        </div>
+
+        <div class="campo">
+          <label>Preço (R$) *</label>
+          <!-- $_POST["preco"] → ProdutoController.php e AtualizarProduto.php -->
+          <input type="number" id="prod-preco" name="preco"
+                 step="0.01" min="0.01" placeholder="0.00" required>
+        </div>
+
+        <div class="campo">
+          <label>Estoque *</label>
+          <!-- $_POST["estoque"] → ProdutoController.php e AtualizarProduto.php -->
+          <input type="number" id="prod-estoque" name="estoque"
+                 min="0" placeholder="0" required>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:20px;">
+        <button type="submit" class="btn btn-primary" style="flex:1;">💾 Salvar</button>
+        <button type="button" class="btn btn-outline" onclick="fecharModal()" style="flex:1;">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+<script src="js/main.js"></script>
+<script>
+  /* Caminhos dos controllers originais do backend */
+  var C = {
+    listar:    '../backend/controllers/ListarProdutos.php',
+    cadastrar: '../backend/controllers/ProdutoController.php',
+    atualizar: '../backend/controllers/AtualizarProduto.php',
+    excluir:   '../backend/controllers/ExcluirProduto.php'
+  };
+
+  /* Todos os produtos carregados (para o dashboard) */
+  var produtosCache = [];
+
+  /* ── Navegação entre seções ── */
+  var secoes = ['dashboard', 'produtos', 'usuarios'];
+  function mostrarSecao(nome, link) {
+    secoes.forEach(function(s) {
+      document.getElementById('sec-' + s).style.display = s === nome ? 'block' : 'none';
+    });
+    document.querySelectorAll('.sidebar-link').forEach(function(l) {
+      l.classList.remove('ativo');
+    });
+    if (link) link.classList.add('ativo');
+
+    /* Carrega dados ao entrar na seção */
+    if (nome === 'produtos' || nome === 'dashboard') carregarProdutos();
+  }
+
+  /* ── Carrega produtos do ListarProdutos.php (original) ── */
+  function carregarProdutos() {
+    fetch(C.listar)
+      .then(function(r) { return r.text(); })
+      .then(function(txt) {
+        /*
+         * ListarProdutos.php original faz:
+         *   echo $produto["nome"] . " - R$ " . $produto["preco"] . "<br>";
+         * Parseamos cada linha.
+         */
+        var linhas = txt.trim().split('<br>').filter(function(l) { return l.trim(); });
+
+        produtosCache = linhas.map(function(linha, idx) {
+          var p = linha.split(' - R$ ');
+          return {
+            id:      idx + 1,
+            nome:    p[0] ? p[0].trim() : 'Produto',
+            preco:   p[1] ? parseFloat(p[1].trim().replace(',', '.')) : 0,
+            estoque: 10   /* estoque não vem no controller original — valor padrão */
+          };
+        });
+
+        atualizarDashboard(produtosCache);
+        atualizarTabelaProdutos(produtosCache);
+      })
+      .catch(function() {
+        document.getElementById('tbody-dash').innerHTML =
+          '<tr><td colspan="2" style="text-align:center;color:var(--muted);padding:20px;">Não foi possível carregar. Verifique se o servidor PHP está rodando.</td></tr>';
+        document.getElementById('tbody-produtos').innerHTML =
+          '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px;">Não foi possível conectar ao backend.</td></tr>';
+      });
+  }
+
+  /* Atualiza os cards de estatísticas do dashboard */
+  function atualizarDashboard(prods) {
+    document.getElementById('stat-produtos').textContent    = prods.length;
+    document.getElementById('stat-sem-estoque').textContent = prods.filter(function(p) { return p.estoque <= 0; }).length;
+
+    /* Estatísticas simples por categoria (inferida do nome) */
+    var mouse = prods.filter(function(p) { return /mouse|g pro|g502|deathadder/i.test(p.nome); }).length;
+    var teclado = prods.filter(function(p) { return /teclado|kumara|alloy|g915/i.test(p.nome); }).length;
+    document.getElementById('stat-mouse').textContent   = mouse;
+    document.getElementById('stat-teclado').textContent = teclado;
+
+    /* Tabela do dashboard (5 primeiros) */
+    document.getElementById('tbody-dash').innerHTML = prods.slice(0, 5).map(function(p) {
+      return '<tr>'
+        + '<td>' + p.nome + '</td>'
+        + '<td style="color:var(--yellow);font-weight:700;">R$ ' + p.preco.toFixed(2).replace('.', ',') + '</td>'
+        + '</tr>';
+    }).join('') || '<tr><td colspan="2" style="text-align:center;color:var(--muted);padding:16px;">Nenhum produto cadastrado.</td></tr>';
+  }
+
+  /* Atualiza a tabela da seção Produtos */
+  function atualizarTabelaProdutos(prods) {
+    if (prods.length === 0) {
+      document.getElementById('tbody-produtos').innerHTML =
+        '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px;">Nenhum produto cadastrado.</td></tr>';
+      return;
+    }
+    document.getElementById('tbody-produtos').innerHTML = prods.map(function(p) {
+      return '<tr id="tr-' + p.id + '">'
+        + '<td>' + p.nome + '</td>'
+        + '<td style="color:var(--yellow);font-weight:700;">R$ ' + p.preco.toFixed(2).replace('.', ',') + '</td>'
+        + '<td style="color:' + (p.estoque > 0 ? 'var(--success)' : 'var(--danger)') + ';font-weight:700;">'
+        + p.estoque + (p.estoque <= 0 ? ' ⚠️' : '') + '</td>'
+        + '<td>'
+          + '<button class="tbl-btn tbl-editar" onclick=\'abrirModal('
+          + JSON.stringify(p) + ')\'>✏️ Editar</button>'
+          + '<button class="tbl-btn tbl-excluir" onclick="excluirProduto(' + p.id + ')">🗑️ Excluir</button>'
+        + '</td>'
+        + '</tr>';
+    }).join('');
+  }
+
+  /* ── Modal ── */
+  function abrirModal(dados) {
+    document.getElementById('modal-titulo').textContent   = dados ? 'Editar Produto' : 'Novo Produto';
+    document.getElementById('prod-id').value              = dados ? dados.id    : '';
+    document.getElementById('prod-nome').value            = dados ? dados.nome  : '';
+    document.getElementById('prod-preco').value           = dados ? dados.preco : '';
+    document.getElementById('prod-estoque').value         = dados ? dados.estoque : '';
+    document.getElementById('modal-produto').classList.add('aberto');
+  }
+
+  function fecharModal() {
+    document.getElementById('modal-produto').classList.remove('aberto');
+  }
+
+  /* Fecha ao clicar fora do modal */
+  document.getElementById('modal-produto').addEventListener('click', function(e) {
+    if (e.target === this) fecharModal();
+  });
+
+  /*
+   * Salva produto: decide entre criar e atualizar.
+   * Criar  → POST para ProdutoController.php  (campos: nome, preco, estoque)
+   * Editar → POST para AtualizarProduto.php   (campos: id, nome, preco, estoque)
+   * Ambos são os controllers ORIGINAIS, sem alteração.
+   */
+  document.getElementById('form-produto').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var id  = document.getElementById('prod-id').value;
+    var url = id ? C.atualizar : C.cadastrar;
+    var fd  = new FormData(this);
+
+    /* Se for novo produto, remove o campo id vazio do FormData */
+    if (!id) fd.delete('id');
+
+    fetch(url, { method: 'POST', body: fd })
+      .then(function(r) { return r.text(); })
+      .then(function() {
+        toast(id ? 'Produto atualizado!' : 'Produto cadastrado!', 'ok');
+        fecharModal();
+        carregarProdutos();
+      })
+      .catch(function() { toast('Erro ao salvar produto.', 'err'); });
+  });
+
+  /*
+   * Exclui produto via GET ?id=N para ExcluirProduto.php (original).
+   * O controller faz: DELETE FROM produtos WHERE id = ? e echo "Produto removido."
+   */
+  function excluirProduto(id) {
+    if (!confirm('Excluir este produto permanentemente?')) return;
+
+    fetch(C.excluir + '?id=' + id)
+      .then(function(r) { return r.text(); })
+      .then(function(txt) {
+        if (txt.includes('removido') || txt.trim() === '') {
+          toast('Produto excluído.', 'ok');
+          var tr = document.getElementById('tr-' + id);
+          if (tr) tr.remove();
+          /* Remove do cache e atualiza dashboard */
+          produtosCache = produtosCache.filter(function(p) { return p.id !== id; });
+          atualizarDashboard(produtosCache);
+        } else {
+          toast('Erro: ' + txt, 'err');
+        }
+      })
+      .catch(function() { toast('Erro ao excluir produto.', 'err'); });
+  }
+
+  /* ── Inicialização ── */
+  document.addEventListener('DOMContentLoaded', carregarProdutos);
+</script>
+</body>
+</html>

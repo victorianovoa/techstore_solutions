@@ -15,4 +15,3 @@ CREATE TABLE itens_pedido (
 
     FOREIGN KEY (produto_id)
     REFERENCES produtos(id)
-

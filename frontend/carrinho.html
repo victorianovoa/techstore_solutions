@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho — TechStore Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="barra-topo">🚚 Frete grátis acima de <strong>R$ 299,90</strong></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-box">TS</div>
+      <div class="logo-text"><strong>TechStore</strong><span>Solutions</span></div>
+    </a>
+    <form class="header-busca" id="form-busca">
+      <input type="text" id="input-busca" placeholder="Buscar produtos…">
+      <button type="submit">🔍</button>
+    </form>
+    <div class="header-acoes">
+      <a href="login.html"    class="btn-hdr">👤 Entrar</a>
+      <a href="carrinho.html" class="btn-hdr amarelo" style="position:relative;">
+        🛒 Carrinho
+        <span class="badge-carrinho" id="badge-carrinho" style="display:none">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html"    class="nav-link">🏠 Início</a>
+    <a href="produtos.html" class="nav-link">📦 Produtos</a>
+    <a href="carrinho.html" class="nav-link ativo">🛒 Carrinho</a>
+  </div>
+</nav>
+
+<!-- Cabeçalho da página -->
+<div class="pg-header">
+  <div class="pg-header-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a> › <span>Carrinho</span>
+    </div>
+    <h1>Meu Carrinho</h1>
+    <p>Revise os itens antes de finalizar</p>
+  </div>
+</div>
+
+<!-- Layout do carrinho -->
+<div class="carrinho-layout">
+
+  <!-- Coluna esquerda: itens -->
+  <div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+      <button onclick="limparCarrinho()" class="btn btn-outline btn-sm">🗑️ Limpar carrinho</button>
+    </div>
+
+    <div class="carrinho-tabela">
+      <!-- Cabeçalho da tabela (oculto em mobile via CSS) -->
+      <div class="carrinho-th">
+        <span>Produto</span>
+        <span>Preço</span>
+        <span>Qtd</span>
+        <span>Subtotal</span>
+        <span></span>
+      </div>
+      <!-- Itens inseridos pelo JS -->
+      <div id="carrinho-itens"></div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <a href="produtos.html" class="btn btn-outline btn-sm">← Continuar comprando</a>
+    </div>
+  </div>
+
+  <!-- Coluna direita: resumo do pedido -->
+  <div class="resumo">
+    <div class="resumo-titulo">📋 Resumo do Pedido</div>
+
+    <div class="resumo-linha">
+      <span>Subtotal</span>
+      <span id="res-subtotal">R$ 0,00</span>
+    </div>
+    <div class="resumo-linha">
+      <span>Frete</span>
+      <span id="res-frete">—</span>
+    </div>
+    <div class="resumo-total">
+      <span>Total</span>
+      <span id="res-total">R$ 0,00</span>
+    </div>
+
+    <!-- Aviso de frete grátis -->
+    <div style="background:rgba(255,193,7,.07);border:1px solid rgba(255,193,7,.2);
+                border-radius:6px;padding:9px 13px;font-size:.78rem;
+                color:var(--muted);margin-top:12px;">
+      🚚 Frete grátis acima de
+      <strong style="color:var(--yellow)">R$ 299,90</strong>
+    </div>
+
+    <button onclick="finalizarPedido()"
+            class="btn btn-primary btn-full" style="margin-top:18px;">
+      ✅ Finalizar Compra
+    </button>
+
+    <div style="text-align:center;margin-top:12px;font-size:.75rem;color:var(--muted);">
+      🔒 Pagamento 100% seguro
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-bottom">
+    © 2024 TechStore Solutions — Projeto Acadêmico UniCEUB
+  </div>
+</footer>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+<script src="js/main.js"></script>
+<script>
+  /*
+   * carrinho.html — gerencia os itens salvos em localStorage.
+   * Ao finalizar, enviaria os dados ao backend (modelo Carrinho.php).
+   */
+
+  /* Renderiza todos os itens do carrinho na tela */
+  function renderizarCarrinho() {
+    var itens = obterCarrinho();
+    var cont  = document.getElementById('carrinho-itens');
+
+    if (itens.length === 0) {
+      /* Substitui todo o layout pelo estado vazio */
+      document.querySelector('.carrinho-layout').innerHTML =
+        '<div class="carrinho-vazio" style="grid-column:1/-1;">'
+        + '<div class="vazio-icon">🛒</div>'
+        + '<h3 style="margin-bottom:8px;">Seu carrinho está vazio</h3>'
+        + '<p style="margin-bottom:20px;color:var(--muted);">Adicione produtos para continuar.</p>'
+        + '<a href="produtos.html" class="btn btn-primary">Ver Produtos</a>'
+        + '</div>';
+      return;
+    }
+
+    /* Gera HTML de cada item */
+    cont.innerHTML = itens.map(function(item) {
+      var sub = (item.preco * item.quantidade).toFixed(2).replace('.', ',');
+      return '<div class="carrinho-item" id="item-' + item.id + '">'
+        + '<div class="item-info">'
+          + '<div class="item-img">' + (item.icone || '📦') + '</div>'
+          + '<div>'
+            + '<div class="item-nome">' + item.nome + '</div>'
+            + '<div class="item-cat">'  + (item.categoria || '') + '</div>'
+          + '</div>'
+        + '</div>'
+        + '<div>R$ ' + parseFloat(item.preco).toFixed(2).replace('.',',') + '</div>'
+        + '<div class="qtd-grupo">'
+          + '<button onclick="ajustarQtd(' + item.id + ',-1)">−</button>'
+          + '<input type="number" value="' + item.quantidade + '" min="1"'
+          + ' onchange="setQtd(' + item.id + ',this.value)">'
+          + '<button onclick="ajustarQtd(' + item.id + ',1)">+</button>'
+        + '</div>'
+        + '<div class="item-sub">R$ ' + sub + '</div>'
+        + '<button class="btn-rm" onclick="removerItem(' + item.id + ')" title="Remover">✕</button>'
+        + '</div>';
+    }).join('');
+
+    calcularResumo(itens);
+  }
+
+  /* Calcula e exibe subtotal, frete e total */
+  function calcularResumo(itens) {
+    var sub   = itens.reduce(function(s, i) { return s + i.preco * i.quantidade; }, 0);
+    var frete = sub >= 299.90 ? 0 : 19.90;
+
+    document.getElementById('res-subtotal').textContent =
+      'R$ ' + sub.toFixed(2).replace('.', ',');
+    document.getElementById('res-frete').textContent =
+      frete === 0 ? '🎉 Grátis' : 'R$ ' + frete.toFixed(2).replace('.', ',');
+    document.getElementById('res-total').textContent =
+      'R$ ' + (sub + frete).toFixed(2).replace('.', ',');
+  }
+
+  /* Aumenta ou diminui a quantidade (+1 ou -1) */
+  function ajustarQtd(id, delta) {
+    var c   = obterCarrinho();
+    var idx = c.findIndex(function(i) { return i.id == id; });
+    if (idx < 0) return;
+    c[idx].quantidade = Math.max(1, c[idx].quantidade + delta);
+    salvarCarrinho(c);
+    renderizarCarrinho();
+  }
+
+  /* Define a quantidade diretamente pelo input */
+  function setQtd(id, val) {
+    var c   = obterCarrinho();
+    var idx = c.findIndex(function(i) { return i.id == id; });
+    if (idx < 0) return;
+    var q = parseInt(val);
+    c[idx].quantidade = isNaN(q) || q < 1 ? 1 : q;
+    salvarCarrinho(c);
+    renderizarCarrinho();
+  }
+
+  /* Remove um item do carrinho */
+  function removerItem(id) {
+    var c = obterCarrinho().filter(function(i) { return i.id != id; });
+    salvarCarrinho(c);
+    renderizarCarrinho();
+    toast('Item removido do carrinho.', 'ok');
+  }
+
+  /* Limpa todos os itens */
+  function limparCarrinho() {
+    if (!confirm('Deseja limpar todos os itens do carrinho?')) return;
+    salvarCarrinho([]);
+    renderizarCarrinho();
+  }
+
+  /*
+   * Finaliza o pedido.
+   * Envia os itens ao backend seguindo o padrão dos controllers originais.
+   * O modelo Carrinho.php e Pedido.php do backend são a referência.
+   */
+  function finalizarPedido() {
+    var itens = obterCarrinho();
+    if (itens.length === 0) { toast('Carrinho vazio!', 'err'); return; }
+
+    if (!localStorage.getItem('ts_logado')) {
+      toast('Faça login para finalizar o pedido.', 'err');
+      setTimeout(function() { window.location.href = 'login.html'; }, 1400);
+      return;
+    }
+
+    toast('Pedido finalizado com sucesso! 🎉', 'ok');
+    salvarCarrinho([]);
+    setTimeout(function() { renderizarCarrinho(); }, 600);
+  }
+
+  /* Inicializa o carrinho ao carregar a página */
+  document.addEventListener('DOMContentLoaded', renderizarCarrinho);
+</script>
+</body>
+</html>

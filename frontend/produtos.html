@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos — TechStore Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="barra-topo">
+  🚚 Frete grátis acima de <strong>R$ 299,90</strong>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-box">TS</div>
+      <div class="logo-text"><strong>TechStore</strong><span>Solutions</span></div>
+    </a>
+    <form class="header-busca" id="form-busca">
+      <input type="text" id="input-busca" placeholder="Buscar produtos…">
+      <button type="submit">🔍</button>
+    </form>
+    <div class="header-acoes">
+      <a href="login.html"    class="btn-hdr">👤 Entrar</a>
+      <a href="cadastro.html" class="btn-hdr">📝 Cadastrar</a>
+      <a href="carrinho.html" class="btn-hdr amarelo" style="position:relative;">
+        🛒 Carrinho
+        <span class="badge-carrinho" id="badge-carrinho" style="display:none">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html"    class="nav-link">🏠 Início</a>
+    <a href="produtos.html" class="nav-link ativo">📦 Produtos</a>
+    <a href="produtos.html?categoria=Mouse"   class="nav-link">🖱️ Mouse</a>
+    <a href="produtos.html?categoria=Teclado" class="nav-link">⌨️ Teclado</a>
+    <a href="produtos.html?categoria=Headset" class="nav-link">🎧 Headset</a>
+  </div>
+</nav>
+
+<!-- Cabeçalho da página -->
+<div class="pg-header">
+  <div class="pg-header-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a> › <span>Produtos</span>
+    </div>
+    <h1>Catálogo de Produtos</h1>
+    <p id="subtitulo-pg">Carregando…</p>
+  </div>
+</div>
+
+<!-- Layout: filtros + grid -->
+<div class="produtos-layout">
+
+  <!-- Filtros laterais -->
+  <aside class="filtros">
+    <div class="filtros-titulo">🔧 Filtros</div>
+
+    <div class="filtro-grupo">
+      <span class="filtro-label">Categoria</span>
+      <label class="filtro-opcao">
+        <input type="radio" name="categoria" value=""> Todas
+      </label>
+      <label class="filtro-opcao">
+        <input type="radio" name="categoria" value="Mouse"> 🖱️ Mouse
+      </label>
+      <label class="filtro-opcao">
+        <input type="radio" name="categoria" value="Teclado"> ⌨️ Teclado
+      </label>
+      <label class="filtro-opcao">
+        <input type="radio" name="categoria" value="Headset"> 🎧 Headset
+      </label>
+    </div>
+
+    <div class="filtro-grupo">
+      <span class="filtro-label">Disponibilidade</span>
+      <label class="filtro-opcao">
+        <input type="checkbox" id="filtro-estoque"> Somente em estoque
+      </label>
+    </div>
+
+    <button class="btn btn-primary btn-full" onclick="aplicarFiltros()">Aplicar</button>
+    <button class="btn btn-outline btn-full" style="margin-top:8px;" onclick="limparFiltros()">Limpar</button>
+  </aside>
+
+  <!-- Área dos produtos -->
+  <main>
+    <div class="toolbar">
+      <span id="contagem-txt">Carregando…</span>
+      <select class="select-f" id="select-ordem" onchange="aplicarFiltros()">
+        <option value="">Ordenar por</option>
+        <option value="nome">Nome A–Z</option>
+        <option value="preco-asc">Menor preço</option>
+        <option value="preco-desc">Maior preço</option>
+      </select>
+    </div>
+
+    <!-- Grid populado pelo JS via ListarProdutos.php -->
+    <div class="produtos-grid" id="produtos-grid">
+      <div class="loading"><div class="spin"></div> Carregando produtos…</div>
+    </div>
+
+    <!-- Paginação -->
+    <div class="paginacao" id="paginacao"></div>
+  </main>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-sobre">
+      <div class="logo">
+        <div class="logo-box">TS</div>
+        <div class="logo-text"><strong>TechStore</strong><span>Solutions</span></div>
+      </div>
+      <p>Periféricos gamers com qualidade e desempenho.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Categorias</h4>
+      <ul>
+        <li><a href="produtos.html?categoria=Mouse">Mouse Gamer</a></li>
+        <li><a href="produtos.html?categoria=Teclado">Teclado Mecânico</a></li>
+        <li><a href="produtos.html?categoria=Headset">Headset Gamer</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Minha Conta</h4>
+      <ul>
+        <li><a href="login.html">Entrar</a></li>
+        <li><a href="cadastro.html">Criar Conta</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suporte</h4>
+      <ul>
+        <li><a href="#">Política de Troca</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2024 TechStore Solutions — Projeto Acadêmico UniCEUB
+  </div>
+</footer>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+<script src="js/main.js"></script>
+<script>
+  /*
+   * produtos.html — lógica de listagem, filtro e paginação.
+   * Busca dados do ListarProdutos.php (controller original).
+   * O controller faz: SELECT * FROM produtos e retorna
+   * "nome - R$ preco<br>" por linha.
+   * O JS parseia, filtra, ordena e renderiza os cards.
+   */
+
+  var ICONES   = { 'Mouse':'🖱️', 'Teclado':'⌨️', 'Headset':'🎧' };
+
+  /* Mapeamento de nome do produto → arquivo de imagem em assets/images/ */
+  var IMAGENS = {
+    'Logitech G Pro X Superlight': 'assets/images/Logitech-G-Pro-X-Superlight.jpg',
+    'Logitech G502 Hero':           'assets/images/Logitech-G502-Hero.jpg',
+    'Razer DeathAdder V3':          'assets/images/Razer-DeathAdder-V3.jpg',
+    'Redragon Kumara K552':         'assets/images/Redragon Kumara K552.jpg',
+    'HyperX Alloy Origins':         'assets/images/HyperX-Alloy-Origins.jpg',
+    'Logitech G915 TKL':            'assets/images/Logitech-G915-TKL.jpg',
+    'HyperX Cloud II':              'assets/images/HyperX Cloud II.jpg',
+    'Logitech G Pro X Headset':     'assets/images/Logitech-G-Pro-X-Headset.jpg',
+    'Razer BlackShark V2':          'assets/images/Razer-BlackShark-V2.jpg'
+  };
+
+  function getImagem(nome) {
+    /* Busca exata primeiro */
+    if (IMAGENS[nome]) return IMAGENS[nome];
+    /* Busca parcial (útil para nomes vindos do backend) */
+    var nomeLower = nome.toLowerCase();
+    for (var key in IMAGENS) {
+      if (nomeLower.includes(key.toLowerCase()) || key.toLowerCase().includes(nomeLower)) {
+        return IMAGENS[key];
+      }
+    }
+    return null;
+  }
+  var API      = '../backend/controllers/ListarProdutos.php';
+  var POR_PAG  = 6;            /* produtos por página */
+  var pagAtual = 1;
+  var todosProdutos  = [];     /* todos carregados do backend */
+  var prodsFiltrados = [];     /* após aplicar filtros */
+
+  /* Dados de exemplo usados como fallback se o backend não responder */
+  var FALLBACK = [
+    { id:1, nome:'Logitech G Pro X Superlight', preco:599.90, estoque:15, categoria:'Mouse'   },
+    { id:2, nome:'Logitech G502 Hero',           preco:299.90, estoque:22, categoria:'Mouse'   },
+    { id:3, nome:'Razer DeathAdder V3',           preco:449.90, estoque:8,  categoria:'Mouse'   },
+    { id:4, nome:'Redragon Kumara K552',          preco:199.90, estoque:30, categoria:'Teclado' },
+    { id:5, nome:'HyperX Alloy Origins',          preco:549.90, estoque:12, categoria:'Teclado' },
+    { id:6, nome:'Logitech G915 TKL',             preco:1199.90,estoque:5,  categoria:'Teclado' },
+    { id:7, nome:'HyperX Cloud II',               preco:499.90, estoque:18, categoria:'Headset' },
+    { id:8, nome:'Logitech G Pro X Headset',      preco:699.90, estoque:10, categoria:'Headset' },
+    { id:9, nome:'Razer BlackShark V2',            preco:599.90, estoque:7,  categoria:'Headset' }
+  ];
+
+  /* ── Inicialização ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    lerURLeFiltrar();
+    carregarProdutos();
+  });
+
+  /* Lê parâmetros da URL (?categoria=Mouse&busca=termo) */
+  function lerURLeFiltrar() {
+    var params = new URLSearchParams(window.location.search);
+    var cat    = params.get('categoria') || '';
+    var busca  = params.get('busca')     || '';
+
+    /* Marca o radio da categoria correspondente */
+    document.querySelectorAll('input[name="categoria"]').forEach(function(r) {
+      r.checked = (r.value === cat);
+    });
+
+    /* Preenche a busca no header se veio por URL */
+    if (busca) {
+      var ib = document.getElementById('input-busca');
+      if (ib) ib.value = busca;
+    }
+  }
+
+  /* ── Carrega produtos do ListarProdutos.php ── */
+  function carregarProdutos() {
+    fetch(API)
+      .then(function(r) { return r.text(); })
+      .then(function(txt) {
+        /*
+         * O ListarProdutos.php original faz:
+         *   echo $produto["nome"] . " - R$ " . $produto["preco"] . "<br>";
+         * Parseamos cada linha para extrair nome e preço.
+         */
+        var linhas = txt.trim().split('<br>').filter(function(l) { return l.trim(); });
+
+        if (linhas.length === 0) {
+          usarFallback();
+          return;
+        }
+
+        todosProdutos = linhas.map(function(linha, idx) {
+          var partes = linha.split(' - R$ ');
+          var nome   = partes[0] ? partes[0].trim() : 'Produto';
+          var preco  = partes[1] ? parseFloat(partes[1].trim().replace(',', '.')) : 0;
+
+          /* Infere a categoria a partir do nome (heurística simples) */
+          var categoria = 'Mouse';
+          var nomeLower = nome.toLowerCase();
+          if (nomeLower.includes('teclado') || nomeLower.includes('kumara') ||
+              nomeLower.includes('alloy')   || nomeLower.includes('g915') ||
+              nomeLower.includes('k552'))     { categoria = 'Teclado'; }
+          else if (nomeLower.includes('headset') || nomeLower.includes('cloud') ||
+                   nomeLower.includes('blackshark')) { categoria = 'Headset'; }
+
+          return { id: idx + 1, nome: nome, preco: preco, estoque: 10, categoria: categoria };
+        });
+
+        aplicarFiltros();
+      })
+      .catch(function() { usarFallback(); });
+  }
+
+  function usarFallback() {
+    todosProdutos = FALLBACK;
+    aplicarFiltros();
+  }
+
+  /* ── Aplica filtros + ordenação e re-renderiza ── */
+  function aplicarFiltros() {
+    /* Categoria selecionada */
+    var catSel = '';
+    document.querySelectorAll('input[name="categoria"]').forEach(function(r) {
+      if (r.checked) catSel = r.value;
+    });
+
+    /* Texto de busca */
+    var busca = (document.getElementById('input-busca') || {}).value || '';
+    busca = busca.toLowerCase().trim();
+
+    /* Somente em estoque */
+    var apenasEstoque = document.getElementById('filtro-estoque').checked;
+
+    /* Filtra */
+    prodsFiltrados = todosProdutos.filter(function(p) {
+      var passaCat     = !catSel || p.categoria === catSel;
+      var passaBusca   = !busca  || p.nome.toLowerCase().includes(busca);
+      var passaEstoque = !apenasEstoque || p.estoque > 0;
+      return passaCat && passaBusca && passaEstoque;
+    });
+
+    /* Ordena */
+    var ordem = document.getElementById('select-ordem').value;
+    if (ordem === 'nome') {
+      prodsFiltrados.sort(function(a, b) { return a.nome.localeCompare(b.nome); });
+    } else if (ordem === 'preco-asc') {
+      prodsFiltrados.sort(function(a, b) { return a.preco - b.preco; });
+    } else if (ordem === 'preco-desc') {
+      prodsFiltrados.sort(function(a, b) { return b.preco - a.preco; });
+    }
+
+    pagAtual = 1;
+    renderizarPagina();
+  }
+
+  function limparFiltros() {
+    document.querySelectorAll('input[name="categoria"]')[0].checked = true;
+    document.getElementById('filtro-estoque').checked = false;
+    document.getElementById('select-ordem').value     = '';
+    var ib = document.getElementById('input-busca');
+    if (ib) ib.value = '';
+    aplicarFiltros();
+  }
+
+  /* ── Renderiza a página atual ── */
+  function renderizarPagina() {
+    var grid = document.getElementById('produtos-grid');
+    var total = prodsFiltrados.length;
+
+    /* Atualiza texto de contagem */
+    document.getElementById('contagem-txt').textContent =
+      total + ' produto(s) encontrado(s)';
+    document.getElementById('subtitulo-pg').textContent =
+      total + ' produto(s) no catálogo';
+
+    if (total === 0) {
+      grid.innerHTML = '<div class="vazio"><div class="vazio-icon">😔</div>Nenhum produto encontrado.</div>';
+      document.getElementById('paginacao').innerHTML = '';
+      return;
+    }
+
+    /* Fatia a página */
+    var inicio = (pagAtual - 1) * POR_PAG;
+    var fim    = inicio + POR_PAG;
+    var pagina = prodsFiltrados.slice(inicio, fim);
+
+    grid.innerHTML = pagina.map(criarCard).join('');
+    renderizarPaginacao(total);
+  }
+
+  /* ── Cria HTML de um card ── */
+  function criarCard(p) {
+    var ic     = ICONES[p.categoria] || '🎮';
+    var ok     = p.estoque === undefined || p.estoque > 0;
+    var imgSrc = getImagem(p.nome);
+    var imgHtml;
+    if (imgSrc) {
+      imgHtml = '<img src="' + imgSrc + '" alt="' + p.nome + '" '
+        + 'style="width:100%;height:100%;object-fit:contain;" '
+        + 'onerror="this.style.display='none';this.parentNode.querySelector('.card-img-fallback').style.display='flex'">'
+        + '<span class="card-img-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:3rem">' + ic + '</span>';
+    } else {
+      imgHtml = ic;
+    }
+    return '<div class="card-produto">'
+      + '<div class="card-img">' + imgHtml
+      + '<span class="' + (ok ? 'badge-ok' : 'badge-off') + '">'
+      + (ok ? 'Em estoque' : 'Esgotado') + '</span></div>'
+      + '<div class="card-body">'
+      + '<span class="badge-cat">' + p.categoria + '</span>'
+      + '<div class="card-nome">' + p.nome + '</div>'
+      + '<div class="card-preco">R$ ' + parseFloat(p.preco).toFixed(2).replace('.',',') + '</div>'
+      + '<div class="card-parcela">em até 10× sem juros</div>'
+      + '<button class="btn-add"' + (!ok ? ' disabled' : '') + ' onclick=\'adicionarAoCarrinho('
+      + JSON.stringify({ id: p.id, nome: p.nome, preco: p.preco, categoria: p.categoria, icone: ic })
+      + ')\'>'
+      + '🛒 Adicionar</button>'
+      + '</div></div>';
+  }
+
+  /* ── Renderiza a paginação ── */
+  function renderizarPaginacao(total) {
+    var totalPags = Math.ceil(total / POR_PAG);
+    var pg = document.getElementById('paginacao');
+
+    if (totalPags <= 1) { pg.innerHTML = ''; return; }
+
+    var html = '<button ' + (pagAtual === 1 ? 'disabled' : '')
+      + ' onclick="irPagina(' + (pagAtual - 1) + ')">‹</button>';
+
+    for (var i = 1; i <= totalPags; i++) {
+      html += '<button class="' + (i === pagAtual ? 'ativo' : '') + '"'
+        + ' onclick="irPagina(' + i + ')">' + i + '</button>';
+    }
+
+    html += '<button ' + (pagAtual === totalPags ? 'disabled' : '')
+      + ' onclick="irPagina(' + (pagAtual + 1) + ')">›</button>';
+
+    pg.innerHTML = html;
+  }
+
+  function irPagina(n) {
+    pagAtual = n;
+    renderizarPagina();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

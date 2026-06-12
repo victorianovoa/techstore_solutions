@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechStore Solutions — Periféricos Gamer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Barra topo -->
+<div class="barra-topo">
+  🚚 Frete grátis em compras acima de <strong>R$ 299,90</strong> &nbsp;|&nbsp; Parcele em até 10× sem juros
+</div>
+
+<!-- ── Header ── -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-box">TS</div>
+      <div class="logo-text">
+        <strong>TechStore</strong>
+        <span>Solutions</span>
+      </div>
+    </a>
+
+    <form class="header-busca" id="form-busca">
+      <input type="text" id="input-busca" placeholder="Buscar produtos, categorias…">
+      <button type="submit">🔍</button>
+    </form>
+
+    <div class="header-acoes">
+      <a href="login.html"    class="btn-hdr">👤 Entrar</a>
+      <a href="cadastro.html" class="btn-hdr">📝 Cadastrar</a>
+      <a href="carrinho.html" class="btn-hdr amarelo" style="position:relative;">
+        🛒 Carrinho
+        <span class="badge-carrinho" id="badge-carrinho" style="display:none">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ── Navegação ── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html"    class="nav-link ativo">🏠 Início</a>
+    <a href="produtos.html" class="nav-link">📦 Produtos</a>
+    <a href="produtos.html?categoria=Mouse"   class="nav-link">🖱️ Mouse</a>
+    <a href="produtos.html?categoria=Teclado" class="nav-link">⌨️ Teclado</a>
+    <a href="produtos.html?categoria=Headset" class="nav-link">🎧 Headset</a>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-tag">⚡ Novidades chegaram</span>
+      <h1 class="hero-title">Eleve Seu Setup ao<br><span>Próximo Nível</span></h1>
+      <p class="hero-desc">
+        Os melhores periféricos gamers com qualidade, desempenho e conforto
+        para dominar qualquer partida.
+      </p>
+      <div class="hero-btns">
+        <a href="produtos.html" class="btn btn-primary">🛒 Ver Produtos</a>
+        <a href="produtos.html" class="btn btn-outline">🔥 Ofertas</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>9+</strong><span>Produtos</span></div>
+        <div class="hero-stat"><strong>3</strong><span>Categorias</span></div>
+        <div class="hero-stat"><strong>10×</strong><span>Sem juros</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-icon">🖱️</div>
+      <h3>Mouse Gamer Pro</h3>
+      <p>Alta precisão para gaming competitivo</p>
+      <div class="hero-card-price">R$ 599,90</div>
+      <a href="produtos.html" class="btn btn-primary btn-full" style="margin-top:18px;">Ver Produto</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Categorias ── -->
+<section class="secao secao-alt">
+  <div class="container">
+    <div class="secao-header">
+      <div>
+        <h2 class="secao-titulo">Navegue por <span>Categorias</span></h2>
+        <p class="secao-sub">Encontre o equipamento ideal</p>
+      </div>
+    </div>
+    <div class="cats-grid">
+      <a href="produtos.html?categoria=Mouse" class="cat-card">
+        <div class="cat-icon">🖱️</div>
+        <div class="cat-nome">Mouse Gamer</div>
+        <div class="cat-qtd" id="qtd-mouse">— produtos</div>
+      </a>
+      <a href="produtos.html?categoria=Teclado" class="cat-card">
+        <div class="cat-icon">⌨️</div>
+        <div class="cat-nome">Teclado Mecânico</div>
+        <div class="cat-qtd" id="qtd-teclado">— produtos</div>
+      </a>
+      <a href="produtos.html?categoria=Headset" class="cat-card">
+        <div class="cat-icon">🎧</div>
+        <div class="cat-nome">Headset Gamer</div>
+        <div class="cat-qtd" id="qtd-headset">— produtos</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Produtos em Destaque ── -->
+<section class="secao">
+  <div class="container">
+    <div class="secao-header">
+      <div>
+        <h2 class="secao-titulo">Produtos em <span>Destaque</span></h2>
+        <p class="secao-sub">Os favoritos dos gamers</p>
+      </div>
+      <a href="produtos.html" class="link-ver">Ver todos →</a>
+    </div>
+
+    <!-- Grid preenchido via JS a partir do ListarProdutos.php -->
+    <div class="produtos-grid" id="grid-destaque">
+      <div class="loading"><div class="spin"></div> Carregando produtos…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Banner promo ── -->
+<section class="secao secao-alt">
+  <div class="container">
+    <div class="banner-promo">
+      <div>
+        <h2>🚚 Frete Grátis acima de <span style="color:var(--yellow)">R$ 299,90</span></h2>
+        <p>Monte seu setup completo com entrega gratuita para todo o Brasil.</p>
+      </div>
+      <a href="produtos.html" class="btn btn-primary">Aproveitar Agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-sobre">
+      <div class="logo">
+        <div class="logo-box">TS</div>
+        <div class="logo-text"><strong>TechStore</strong><span>Solutions</span></div>
+      </div>
+      <p>Periféricos gamers com qualidade, desempenho e conforto para elevar seu setup.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Produtos</h4>
+      <ul>
+        <li><a href="produtos.html">Todos os Produtos</a></li>
+        <li><a href="produtos.html?categoria=Mouse">Mouse Gamer</a></li>
+        <li><a href="produtos.html?categoria=Teclado">Teclado Mecânico</a></li>
+        <li><a href="produtos.html?categoria=Headset">Headset Gamer</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Minha Conta</h4>
+      <ul>
+        <li><a href="login.html">Entrar</a></li>
+        <li><a href="cadastro.html">Criar Conta</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suporte</h4>
+      <ul>
+        <li><a href="#">Política de Troca</a></li>
+        <li><a href="#">Formas de Pagamento</a></li>
+        <li><a href="#">Frete e Entrega</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2024 TechStore Solutions — Projeto Acadêmico UniCEUB — Engenharia de Software
+  </div>
+</footer>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+<script src="js/main.js"></script>
+<script>
+  /*
+   * Carrega produtos via fetch do ListarProdutos.php (original).
+   * O controller faz SELECT * FROM produtos e retorna HTML com echo.
+   * Aqui capturamos o texto e parseamos para montar os cards.
+   *
+   * Como o ListarProdutos.php original faz echo de texto puro
+   * (nome - R$ preco<br>), criamos um wrapper PHP mínimo para
+   * retornar JSON — veja backend/controllers/ListarProdutos.php
+   * que foi deixado intocado. Para integração HTML pura usamos
+   * o endpoint api_produtos.php que encapsula a mesma query.
+   */
+
+  /* Ícones por categoria */
+  var ICONES = { 'Mouse': '🖱️', 'Teclado': '⌨️', 'Headset': '🎧' };
+  var ICONE_DEF = '🎮';
+
+  /* Caminho para o endpoint PHP do backend */
+  var API = '../backend/controllers/';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    carregarDestaque();
+  });
+
+  /* Carrega até 9 produtos do ListarProdutos.php */
+  function carregarDestaque() {
+    var grid = document.getElementById('grid-destaque');
+
+    fetch(API + 'ListarProdutos.php')
+      .then(function(r) { return r.text(); })
+      .then(function(txt) {
+        /* O controller original faz echo "nome - R$ preco<br>" por linha */
+        var linhas = txt.trim().split('<br>').filter(function(l) { return l.trim(); });
+
+        if (linhas.length === 0) {
+          grid.innerHTML = '<div class="vazio"><div class="vazio-icon">📦</div>Nenhum produto cadastrado ainda.<br><a href="admin.html" style="color:var(--yellow)">Cadastrar →</a></div>';
+          return;
+        }
+
+        /* Parseia as linhas e monta os cards */
+        var produtos = linhas.map(function(linha, idx) {
+          var partes = linha.split(' - R$ ');
+          return {
+            id:    idx + 1,
+            nome:  partes[0] ? partes[0].trim() : 'Produto',
+            preco: partes[1] ? parseFloat(partes[1].trim().replace(',', '.')) : 0
+          };
+        }).slice(0, 9);
+
+        grid.innerHTML = produtos.map(function(p) {
+          return criarCard(p);
+        }).join('');
+
+        /* Atualiza contadores de categoria (approximado) */
+        atualizarContadores(produtos);
+      })
+      .catch(function() {
+        /* Fallback com dados estáticos se o backend não estiver acessível */
+        var fallback = [
+          { id:1, nome:'Logitech G Pro X Superlight', preco:599.90, categoria:'Mouse'   },
+          { id:2, nome:'Logitech G502 Hero',           preco:299.90, categoria:'Mouse'   },
+          { id:3, nome:'Razer DeathAdder V3',           preco:449.90, categoria:'Mouse'   },
+          { id:4, nome:'Redragon Kumara K552',          preco:199.90, categoria:'Teclado' },
+          { id:5, nome:'HyperX Alloy Origins',          preco:549.90, categoria:'Teclado' },
+          { id:6, nome:'Logitech G915 TKL',             preco:1199.90,categoria:'Teclado' },
+          { id:7, nome:'HyperX Cloud II',               preco:499.90, categoria:'Headset' },
+          { id:8, nome:'Logitech G Pro X Headset',      preco:699.90, categoria:'Headset' },
+          { id:9, nome:'Razer BlackShark V2',            preco:599.90, categoria:'Headset' }
+        ];
+        grid.innerHTML = fallback.map(criarCard).join('');
+        atualizarContadores(fallback);
+      });
+  }
+
+  /* Gera o HTML de um card de produto */
+  function criarCard(p) {
+    var ic  = ICONES[p.categoria] || ICONE_DEF;
+    var cat = p.categoria || 'Gamer';
+    var ok  = p.estoque === undefined || p.estoque > 0;
+    return '<div class="card-produto">'
+      + '<div class="card-img">' + ic
+      + '<span class="' + (ok ? 'badge-ok' : 'badge-off') + '">'
+      + (ok ? 'Em estoque' : 'Esgotado') + '</span></div>'
+      + '<div class="card-body">'
+      + '<span class="badge-cat">' + cat + '</span>'
+      + '<div class="card-nome">' + p.nome + '</div>'
+      + '<div class="card-preco">R$ ' + parseFloat(p.preco).toFixed(2).replace('.',',') + '</div>'
+      + '<div class="card-parcela">em até 10× sem juros</div>'
+      + '<button class="btn-add" ' + (!ok ? 'disabled' : '') + ' onclick=\'adicionarAoCarrinho('
+      + JSON.stringify({ id: p.id, nome: p.nome, preco: p.preco, categoria: cat, icone: ic })
+      + ')\'>'
+      + '🛒 Adicionar</button>'
+      + '</div></div>';
+  }
+
+  /* Atualiza as contagens de produto por categoria nos cards de categoria */
+  function atualizarContadores(produtos) {
+    var cont = { Mouse: 0, Teclado: 0, Headset: 0 };
+    produtos.forEach(function(p) { if (cont[p.categoria] !== undefined) cont[p.categoria]++; });
+    ['mouse','teclado','headset'].forEach(function(k) {
+      var el = document.getElementById('qtd-' + k);
+      var key = k.charAt(0).toUpperCase() + k.slice(1);
+      if (el && cont[key] !== undefined) el.textContent = cont[key] + ' produto(s)';
+    });
+  }
+</script>
+</body>
+</html>
