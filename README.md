@@ -2,21 +2,41 @@
 
 Sistema web de comércio eletrônico desenvolvido como projeto acadêmico do curso de Engenharia de Software do Centro Universitário de Brasília (UniCEUB).
 
-## Sobre o Projeto
+---
 
-A TechStore Solutions é uma plataforma de e-commerce voltada para a comercialização de produtos tecnológicos, periféricos gamers, hardware e acessórios de informática.
+## 📖 Sobre o Projeto
 
-O projeto foi desenvolvido com foco na aplicação prática de conceitos de Engenharia de Software, Modelagem UML, Arquitetura em Camadas, Banco de Dados Relacional, Programação Orientada a Objetos e Versionamento de Código.
+A **TechStore Solutions** é uma plataforma de e-commerce voltada para a comercialização de produtos tecnológicos, periféricos gamers, hardware e acessórios de informática.
 
-## Funcionalidades
+O projeto foi desenvolvido com foco na aplicação prática de conceitos de **Engenharia de Software**, **Arquitetura em Camadas**, **Banco de Dados Relacional**, **Desenvolvimento Web**, **Programação Orientada a Objetos** e **Versionamento de Código**.
+
+---
+
+## 🎯 Objetivos Acadêmicos
+
+O projeto foi desenvolvido para consolidar conhecimentos relacionados a:
+
+* Engenharia de Software
+* Arquitetura em Camadas
+* Banco de Dados Relacional
+* Desenvolvimento Web
+* Programação Orientada a Objetos
+* Controle de Versão com Git e GitHub
+* Modelagem UML
+* Desenvolvimento Back-end com PHP
+* Desenvolvimento Front-end com HTML, CSS e JavaScript
+
+---
+
+## 🚀 Funcionalidades
 
 ### Cliente
 
 * Cadastro de usuários
 * Login no sistema
 * Consulta ao catálogo de produtos
-* Adição de produtos ao carrinho
 * Visualização de produtos
+* Adição de produtos ao carrinho
 * Finalização de pedidos
 
 ### Administrador
@@ -26,9 +46,11 @@ O projeto foi desenvolvido com foco na aplicação prática de conceitos de Enge
 * Exclusão de produtos
 * Listagem de produtos
 * Controle de estoque
-* Gerenciamento de informações do sistema
+* Gerenciamento das informações do sistema
 
-## Tecnologias Utilizadas
+---
+
+## 🛠️ Tecnologias Utilizadas
 
 ### Front-end
 
@@ -38,7 +60,7 @@ O projeto foi desenvolvido com foco na aplicação prática de conceitos de Enge
 
 ### Back-end
 
-* PHP
+* PHP 8
 
 ### Banco de Dados
 
@@ -51,86 +73,133 @@ O projeto foi desenvolvido com foco na aplicação prática de conceitos de Enge
 * XAMPP
 * Visual Studio Code
 
-## Arquitetura do Projeto
+---
 
-O sistema foi estruturado utilizando arquitetura em camadas:
+## 🏗️ Arquitetura do Projeto
 
-backend/
+O sistema foi estruturado utilizando **Arquitetura em Camadas**, promovendo separação de responsabilidades entre interface, regras de negócio, controle e persistência de dados.
 
-* config
-* controllers
-* models
-* services
+```text
+techstore_solutions/
 
-frontend/
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   └── services/
+│
+├── frontend/
+│   ├── assets/
+│   │   └── images/
+│   ├── css/
+│   ├── js/
+│   ├── index.html
+│   ├── produtos.html
+│   ├── login.html
+│   ├── cadastro.html
+│   ├── carrinho.html
+│   └── admin.html
+│
+├── sql/
+│   ├── techstore.sql
+│   └── itens_pedido.sql
+│
+├── docs/
+│
+└── README.md
+```
 
-sql/
+---
 
-docs/
-
-## Padrões Utilizados
+## 📐 Padrões Utilizados
 
 ### Singleton
 
-O padrão Singleton foi aplicado para centralizar o gerenciamento da conexão com o banco de dados através da classe Database.
+Aplicado para centralizar o gerenciamento da conexão com o banco de dados por meio da classe `Database`.
 
-## Estrutura do Projeto
+### Programação Orientada a Objetos
 
-techstore_solutions/
+Aplicada na modelagem das entidades:
 
-backend/
+* Produto
+* Usuário
+* Carrinho
+* Pedido
 
-* config/
-* controllers/
-* models/
-* services/
+### Arquitetura em Camadas
 
-frontend/
+Organização do sistema em camadas independentes, facilitando manutenção, escalabilidade e reutilização do código.
 
-sql/
+---
 
-docs/
+## 🗄️ Banco de Dados
 
-README.md
+O sistema utiliza **MySQL** para armazenamento das informações.
 
-## Banco de Dados
-
-O sistema utiliza MySQL para armazenamento das informações.
-
-Principais tabelas:
+### Principais tabelas
 
 * usuarios
-* categorias
 * produtos
 * pedidos
 * itens_pedido
 
-## Como Executar o Projeto
+---
+
+## ⚙️ Como Executar o Projeto
 
 ### Pré-requisitos
 
 * XAMPP
-* PHP
+* PHP 8
 * MySQL
 * Navegador Web
 
-### Passos
+### Passo 1 — Clonar o Repositório
 
-1. Clonar o repositório.
+```bash
+git clone https://github.com/victorianovoa/techstore_solutions.git
+```
 
-2. Copiar o projeto para a pasta htdocs do XAMPP.
+### Passo 2 — Copiar para o XAMPP
 
-3. Iniciar Apache e MySQL.
+Mover a pasta do projeto para:
 
-4. Criar o banco de dados utilizando os scripts da pasta sql.
+```text
+xampp/htdocs/techstore_solutions
+```
 
-5. Acessar o projeto pelo navegador.
+### Passo 3 — Iniciar os Serviços
 
-## Versionamento
+Iniciar:
 
-O projeto utiliza Git e GitHub para controle de versões e rastreamento das alterações realizadas durante o desenvolvimento.
+* Apache
+* MySQL
 
-## Equipe
+### Passo 4 — Configurar o Banco
+
+Criar o banco de dados e executar os scripts presentes na pasta:
+
+```text
+sql/
+```
+
+### Passo 5 — Executar o Sistema
+
+Acessar:
+
+```text
+http://localhost/techstore_solutions/frontend
+```
+
+---
+
+## 🔄 Versionamento
+
+O projeto utiliza **Git** e **GitHub** para controle de versões e rastreamento das alterações realizadas durante o desenvolvimento.
+
+---
+
+## 👥 Equipe
 
 * Arthur Santana Santos
 * Felipe Evangelista e Silva
@@ -138,10 +207,14 @@ O projeto utiliza Git e GitHub para controle de versões e rastreamento das alte
 * Lucas Coelho de Castro
 * Victória de Nóvoa Gama
 
-## Repositório
+---
+
+## 📂 Repositório
 
 https://github.com/victorianovoa/techstore_solutions
 
-## Licença
+---
 
-Projeto desenvolvido para fins acadêmicos na disciplina Metodologia de Desenvolvimento de Software do Centro Universitário de Brasília (UniCEUB).
+## 📄 Licença
+
+Projeto desenvolvido para fins acadêmicos na disciplina **Metodologia de Desenvolvimento de Software** do **Centro Universitário de Brasília (UniCEUB)**.
